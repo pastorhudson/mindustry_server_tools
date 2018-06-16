@@ -19,9 +19,6 @@ for p in dirMaps:
     newMapJson['maps'].append(map)
     minKey = minKey+1
 
-
-
-
 with open('maps.json', 'w') as outfile:
     json.dump(newMapJson, outfile)
 print ("Done!")
