@@ -1,8 +1,6 @@
 import discord
 import json
-import glob
-import os
-import random
+
 from discord.ext import commands
 
 description = '''A simple discord bot using discord.py that lists the maps in maps.json. 
