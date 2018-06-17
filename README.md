@@ -1,7 +1,7 @@
 ## mindustry_server_tools
 Tools for administering a headless Mindustry server
 
-###refreshmaps.py
+### refreshmaps.py
 A simple python script that scans the mindustry-maps folder and adds any new png files to the server map list.
 
 #### Installing
@@ -10,7 +10,7 @@ Copy refreshmaps.py to your server's mindustry-maps folder.
 Simply add or remove .png maps to the mindustry-maps folder and run the script.
 python refreshmaps.py
 
-###mindustry_server_discord_bot.py
+### mindustry_server_discord_bot.py
 Mindustry discord bot based on https://github.com/Greenfoot5/GreenBOT and my own added cogs.
 
 ### Installing
