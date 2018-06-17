@@ -17,7 +17,9 @@ Mindustry discord bot based on https://github.com/Greenfoot5/GreenBOT and my own
 You need python 3.6 and discord.py rewrite
 
 * Install the discord.py rewrite using:
-'sudo python3.6 -m pip install -U git+https://github.com/Rapptz/discord.py@rewrite#egg=discord.py[voice]'
+```
+sudo python3.6 -m pip install -U git+https://github.com/Rapptz/discord.py@rewrite#egg=discord.py[voice]
+```
 * Git clone this repository
 * Put your token in token.txt in the mindustry_server_tools folder
 * Set your mindustry-maps folder location in /cogs/maps.py
