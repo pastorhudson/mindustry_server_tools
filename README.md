@@ -3,6 +3,19 @@ Tools for administering a headless Mindustry server
 
 ### refreshmaps.py
 A simple python script that scans the mindustry-maps folder and adds any new png files to the server map list.
+What happens when you run it:
+* The script scans the folder where the script is run for all png files.
+* The script renames all files to lower case.
+* The script looks for any files with "oregenoff" in the title and sets them to oreGen off.
+* New maps.json is then dumped.
+
+Usage:
+Add or remove maps by adding and removing the png files to the mindustry-maps folder.
+I have created an "other_maps" folder inside my mindustry-maps folder and I put maps I'm not currently running in there.
+
+Make sure any maps with oregen off have 'oregenoff' somewhere in the filename.
+
+Run the script: python refreshmaps.py
 
 #### Installing
 Copy refreshmaps.py to your server's mindustry-maps folder.
