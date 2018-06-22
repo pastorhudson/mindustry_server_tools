@@ -16,6 +16,7 @@ I have created an "other_maps" folder inside my mindustry-maps folder and I put 
 Make sure any maps with oregen off have 'oregenoff' somewhere in the filename.
 
 Run the script inside your mindustry-maps folder:
+
 '''
 python refreshmaps.py
 '''
