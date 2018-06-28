@@ -3,7 +3,13 @@ from discord.ext import commands
 import asyncio
 import json
 
-mapFolder = "C:\\Users\\rhudson\\PycharmProjects\\mindustry_server_tools\\"
+'''
+Set your map folder path including trailing slash.
+On Windows use double \\ like c:\\users\\username\\mindustry\\mindustry-maps\\ 
+On linux use normal full path like /home/username/mindustry/mindustry-maps/
+Relative paths with ~/ don't seem to work.
+'''
+mapFolder = "/home/username/mindustry/mindustry-maps/"
 
 from discord.ext import commands
 
@@ -17,21 +23,19 @@ class MapsCog:
     #when !maps is recieved run this:
     @commands.command(name='maps',aliases=['m','Maps','M'])
     async def Mlist(self,ctx):
-        #Open the maps.json file
         with open(mapFolder + 'maps.json') as json_file:
             data = json.load(json_file)
-            #Send the ['maps'] ['name'] to the discord channel
-            print("maps command")
+            print("Maps command received")
             await ctx.send("**Currently Loaded Maps:** \n" + "```" + "\n".join(x.get("name", "") for x in data["maps"]) + "```")
+            print("**Currently Loaded Maps:** \n" + "```" + "\n".join(x.get("name", "") for x in data["maps"]) + "```")
 
-
-    @commands.command(name='showmap',aliases=['s','Showmap','S','ShowMap','show','Show'])
+    @commands.command(name='showmap',aliases=['Showmap','ShowMap','show','Show'])
     async def showMap(self,ctx,map:str=None):
         if map is None:
             await ctx.send("Please specify a map.")
             return
 
-        await ctx.send("Map: " + map, file=discord.File(map + '.png'))
+        await ctx.send("Map: " + map, file=discord.File(mapFolder + map + '.png'))
         print('sending ' + mapFolder + map + '.png')
 
 # The setup fucntion below is neccesarry. Remember we give bot.add_cog() the name of the class in this case MembersCog.
