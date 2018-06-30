@@ -41,7 +41,8 @@ def get_prefix(bot, message):
 # Think of it like a dot path import
 initial_extensions = ['cogs.help',
                       'cogs.mindustry',
-                      'cogs.maps']
+                      'cogs.maps',
+                      'cogs.servers']
 
 
 bot = commands.Bot(command_prefix=get_prefix, description="A bot for mindustry.pastorhudson.com", self_bot=False)
