@@ -40,9 +40,11 @@ class MindustryCog:
                         dreply = base64.b64decode(reply)
                         jserv['failCount'] = 0
                         jserv['lastSuccess'] = timeStamp
-                        serverList.append(" ".join(["**" + jserv['host'] + " /**",
-                                                    str(dreply[dreply[0] + 5 + dreply[dreply[0] + 1]]),"players","on map",
-                                                    "[" + str(dreply[(dreply[0]+2):(dreply[0]+2+dreply[dreply[0]+1])])[2:(dreply[0]+dreply[dreply[0]+1])] + "]"]))
+                        players ="**"+str(dreply[dreply[0] + 5 + dreply[dreply[0] + 1]])+"** players "
+                        currentMap = "on map **'" + str(dreply[(dreply[0]+2):(dreply[0]+2+dreply[dreply[0]+1])])[2:(dreply[0]+dreply[dreply[0]+1])]+"**"
+                        wave = "wave **" + str(dreply[dreply[0]+5+dreply[dreply[0]+1]+4])+"**"
+                        print(" ".join(["**" + jserv['host'] + " /**",players,currentMap,wave]))
+                        serverList.append(" ".join(["**" + jserv['host'] + " /**",players,currentMap,wave]))
                 except Exception as e:
                     print(type(e))
                     print(e)

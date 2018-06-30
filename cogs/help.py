@@ -46,28 +46,22 @@ class HelpCog:
                             value="[mindustry.pastorhudson.com]")
             embed.add_field(name='ping [server]',
                             value="Pings a mindustry server. Defaults to [mindustry.pastorhudson.com] if no server given")
-            embed.add_field(name='maps',
+            embed.add_field(name='map',
                             value="Lists maps currently loaded on [mindustry.pastorhudson.com]")
+            embed.add_field(name='map load <attach .png>',
+                            value="Upload a map .png file to [mindustry.pastorhudson.com]")
+            embed.add_field(name='map refresh',
+                            value="Rebuild the map list on [mindustry.pastorhudson.com]")
             embed.add_field(name='showmap <map_name>',
                             value="Shows the requested map")
+            embed.add_field(name='servers',
+                            value="Shows a list of currently running servers")
+            embed.add_field(name='ping <hostname>',
+                            value="Shows status of server, and adds it to the !servers list")
+
         await ctx.send(content='**Displaying help**', embed=embed)
 
-'''            guilds = []
-            guilds = pickle.load(open("guilds.data", "rb"))
-            for a in range(len(guilds)):
-                if guilds[a][0] == ctx.guild.id:
-                    if guilds[a][3][0] == True:
-                        embed.add_field(name='Ping',
-                                        value="Pings a mindustry server. Defaults to mindustry.pastorhudson.com if no server given")
-                    if guilds[a][2][0] == True:
-                        embed.add_field(name='Trivia',
-                                        value='Do you have the knowledge to answer the questions correctly?')
-                    if guilds[a][1][0] == True:
-                        embed.add_field(name='Miscellaneous',
-                                        value="A.K.A. Misc. Commands that don't have a category.")
 
-            
-'''
 
 def setup(bot):
     bot.add_cog(HelpCog(bot))

@@ -12,7 +12,7 @@ class MindustryCog:
 
     #LengthOfHostName HostName, LengthOfMapName MapName, PlayerAmount, Wave, Version
     @commands.command(name='ping',aliases=['p','Ping','P'])
-    async def Mping(self,ctx,server:str='None'):
+    async def Mping(self,ctx,server:str='mindustry.pastorhudson.com'):
         print("------Ping Command Recieved--------")
         if server is 'None':
             await ctx.send("Please specify a server.")
@@ -22,15 +22,12 @@ class MindustryCog:
             await websocket.send('ping')
             reply = await asyncio.wait_for(websocket.recv(),timeout=1)
             dreply = base64.b64decode(reply)
-            embed = discord.Embed(title=server,
-                                  colour=0x33CCFF)
+            players = "**" + str(dreply[dreply[0] + 5 + dreply[dreply[0] + 1]]) + "** Players "
+            currentMap = "on map **'" + str(dreply[(dreply[0] + 2):(dreply[0] + 2 + dreply[dreply[0] + 1])])[
+                                        2:(dreply[0] + dreply[dreply[0] + 1])] + "**"
+            wave = "Wave **" + str(dreply[dreply[0] + 5 + dreply[dreply[0] + 1] + 4]) + "**"
 
-            embed.add_field(name='Host',
-                            value=str(dreply[1:(dreply[0]+1)])[2:(dreply[0]+2)])
-            embed.add_field(name='Map',
-                            value=str(dreply[(dreply[0]+2):(dreply[0]+2+dreply[dreply[0]+1])])[2:(dreply[0]+dreply[dreply[0]])])
-            embed.add_field(name='Players',
-                            value=dreply[dreply[0]+5+dreply[dreply[0]+1]])
+            embed = discord.Embed(title=server,colour=0x33CCFF,description=" ".join([players,currentMap,wave]))
 
             await ctx.send(embed=embed)
 
