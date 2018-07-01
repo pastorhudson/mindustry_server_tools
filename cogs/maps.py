@@ -6,6 +6,8 @@ import datetime
 import os
 import glob
 import refreshmaps
+import io
+import aiohttp
 
 '''
 Set your map folder path including trailing slash.
@@ -13,7 +15,8 @@ On Windows use double \\ like c:\\users\\username\\mindustry\\mindustry-maps\\
 On linux use normal full path like /home/username/mindustry/mindustry-maps/
 Relative paths with ~/ don't seem to work.
 '''
-mapFolder = "<your map folder here.>"
+#mapFolder = "<your map folder here.>"
+mapFolder = ""
 
 from discord.ext import commands
 
@@ -57,28 +60,60 @@ class MapsCog:
     @maps.command(name='load', aliases=['Load', 'l', 'L', '-load'],pass_context=True)
     async def loadMap(self,ctx):
         print("------Load Map Command Recieved---")
+        alreadyGotFile = False
         timeStamp = '{:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now())
         print(timeStamp)
-        try:
-            attachment = ctx.message.attachments[0]
-        except IndexError:
-            print("Error: file not attached.")
-            await ctx.send("Please attach a .png map file")
-            return
-        if attachment.filename.endswith('.png'):
-            dirMaps = ([os.path.basename(x) for x in glob.glob('*.png')])
-            if attachment.filename.lower() not in dirMaps:
-                await attachment.save(attachment.filename)
-                print(str(ctx.message.author) + " loaded " + attachment.filename)
-                refreshmaps.refresh_maps()
+        if "http" in ctx.message.content:
+            print("This looks like a url to me!")
+            url = ctx.message.content[ctx.message.content.find('http'):]
+            print(str(ctx.message.author) + " wants us to get " + url)
+            fileName = (ctx.message.content[ctx.message.content.rfind('/')+1:])
+            if url.endswith('.png'):
+                dirMaps = ([os.path.basename(x) for x in glob.glob(mapFolder + '*.png')])
+                if fileName.lower() not in dirMaps:
+                  async with aiohttp.ClientSession() as session:
+                    async with session.get(url) as resp:
+                        if resp.status != 200:
+                            return await ctx.send('Could not download file...')
+
+                        with open(fileName, 'wb') as fd:
+                            while True:
+                                chunk = await resp.content.read(512*1024)
+                                if not chunk:
+                                    break
+                                fd.write(chunk)
+                            #fd.close()
+                            alreadyGotFile = True
+                            print(fileName + " saved!")
+                            await ctx.send(fileName.lower() + " loaded to the server.")
+                            refreshmaps.refresh_maps()
+                else:
+                    print(str(
+                        ctx.message.author) + " tried to send " + fileName + ", but it's already on the server.")
+                    await ctx.send(
+                        fileName + " is already on the server. Use !maps to see the loaded maps.")
+                    alreadyGotFile = True
+        if not alreadyGotFile:
+            try:
+                attachment = ctx.message.attachments[0]
+            except IndexError:
+                print("Error: file not attached.")
+                await ctx.send("Please attach a .png map file")
+                return
+            if attachment.filename.endswith('.png'):
+                dirMaps = ([os.path.basename(x) for x in glob.glob(mapFolder + '*.png')])
+                if attachment.filename.lower() not in dirMaps:
+                    await attachment.save(mapFolder + attachment.filename)
+                    print(str(ctx.message.author) + " loaded " + attachment.filename)
+                    refreshmaps.refresh_maps()
+                else:
+                    print(str(ctx.message.author) + " tried to send " + attachment.filename+", but it's already on the server.")
+                    await ctx.send(attachment.filename + " is already on the server. User !maps to see the loaded maps.")
+
+
             else:
-                print(str(ctx.message.author) + " tried to send " + attachment.filename+", but it's already on the server.")
-                await ctx.send(attachment.filename + " is already on the server. User !maps to see the loaded maps.")
-
-
-        else:
-            print(str(ctx.message.author) + " tried to send " + attachment.filename)
-            await ctx.send("Please attach a .png map file")
+                print(str(ctx.message.author) + " tried to send " + attachment.filename)
+                await ctx.send("Please attach a .png map file")
 
     @maps.command(name='refresh', aliases=['Refresh'], pass_context=True)
     async def refreshMaps(self, ctx):

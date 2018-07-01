@@ -5,8 +5,15 @@ from collections import OrderedDict
 
 
 def refresh_maps():
+    '''
+    Set your map folder path including trailing slash.
+    On Windows use double \\ like c:\\users\\username\\mindustry\\mindustry-maps\\
+    On linux use normal full path like /home/username/mindustry/mindustry-maps/
+    Relative paths with ~/ don't seem to work.
+    '''
+    # mapFolder = "<your map folder here.>"
+    mapFolder = ""
 
-    mapFolder = "<your mindustry-map folder here.>"
     minKey = 13
     try:
         with open(mapFolder + 'maps.json') as json_file:

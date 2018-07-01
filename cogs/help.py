@@ -50,6 +50,8 @@ class HelpCog:
                             value="Lists maps currently loaded on [mindustry.pastorhudson.com]")
             embed.add_field(name='map load <attach .png>',
                             value="Upload a map .png file to [mindustry.pastorhudson.com]")
+            embed.add_field(name='map load <url>',
+                            value="Upload a map .png file to [mindustry.pastorhudson.com]")
             embed.add_field(name='map refresh',
                             value="Rebuild the map list on [mindustry.pastorhudson.com]")
             embed.add_field(name='showmap <map_name>',

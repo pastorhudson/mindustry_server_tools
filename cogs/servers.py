@@ -10,6 +10,17 @@ import re
 import async_timeout
 from socket import gaierror
 
+
+'''
+Set your map folder path including trailing slash.
+On Windows use double \\ like c:\\users\\username\\mindustry\\mindustry-maps\\ 
+On linux use normal full path like /home/username/mindustry/mindustry-maps/
+Relative paths with ~/ don't seem to work.
+'''
+#mapFolder = "<your map folder here.>"
+mapFolder = ""
+
+
 class MindustryCog:
     def __init__(self, bot):
         self.bot = bot
